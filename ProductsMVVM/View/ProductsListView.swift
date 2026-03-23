@@ -10,8 +10,8 @@ import SwiftUI
 struct ProductsListView: View {
     
     @State var searchText = ""
-    @State var isDarkMode = false
-    
+    @AppStorage("isDarkMode") private var isDarkMode = false
+
     @StateObject var personViewModel = ProductViewModel(networkManager: NetworkManager())
     
     var filteredProducts: [Product] = []
@@ -21,6 +21,9 @@ struct ProductsListView: View {
         NavigationStack{
             
             VStack{
+                Toggle("Dark Mode", isOn: $isDarkMode)
+                .padding(10)
+                
                 TextField("Search product", text: $searchText)
                     .padding(10)
             }
@@ -56,7 +59,7 @@ struct ProductsListView: View {
             }
             .refreshable{
                 personViewModel.fetchProducts()
-            }
+            }.preferredColorScheme(isDarkMode ? .dark : .light)
         }
     }
 }
