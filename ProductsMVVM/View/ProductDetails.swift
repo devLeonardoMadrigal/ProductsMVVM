@@ -14,7 +14,10 @@ struct ProductDetails: View {
     var body: some View {
         
         VStack(alignment: .center){
-                        
+            
+            
+            Text("\(product.title)")
+                .font(.title)
             AsyncImage(url: URL(string: product.image)){ image in
                 image
                     .resizable()
@@ -24,12 +27,23 @@ struct ProductDetails: View {
                 ProgressView()
                     .frame(width: 100, height:100)
             }
-            Text("\(product.title)")
-                .font(.title)
             
-            Text("Price: \(String(format: "%.2f", product.price))")
+            Text("Price: $\(String(format: "%.2f", product.price))")
                 .font(.subheadline)
-                .foregroundStyle(.cyan)
+            
+            Text("Rating: \(String(format: "%.2f", product.rating.rate)) / Reviews: \(product.rating.count)")
+
+            
+            VStack(alignment: .leading){
+                
+                Text("Product id: \(product.id)")
+                    .font(.caption)
+               
+                Text("Description: \n\(product.description)")
+                    .font(.body)
+                Text("Category: \(product.category)")
+                    .font(Font.body.bold())
+            }
         }
         
     }
