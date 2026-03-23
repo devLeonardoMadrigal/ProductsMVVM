@@ -26,6 +26,10 @@ struct ProductsListView: View {
                 
                 TextField("Search product", text: $searchText)
                     .padding(10)
+                    .onChange(of: searchText){ oldText, newText in
+                        UserDefaults.standard.set(newText, forKey: "lastSearchedText")
+                    }
+                Text("Last searched: \(UserDefaults.standard.string(forKey: "lastSearchedText") ?? "Nothing") ")
             }
             
             VStack {
