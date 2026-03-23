@@ -14,7 +14,7 @@ struct ProductsMVVMApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ProductsListView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
