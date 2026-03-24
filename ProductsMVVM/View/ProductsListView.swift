@@ -12,7 +12,7 @@ struct ProductsListView: View {
     @State var searchText = ""
     @AppStorage("isDarkMode") private var isDarkMode = false
 
-    @StateObject var personViewModel = ProductViewModel(networkManager: NetworkManager())
+    @StateObject var productViewModel = ProductViewModel(networkManager: NetworkManager())
     
     var filteredProducts: [Product] = []
     
@@ -33,7 +33,7 @@ struct ProductsListView: View {
             }
             
             VStack {
-                switch personViewModel.viewState {
+                switch productViewModel.viewState {
                 case .loading:
                     ProgressView()
                 case .loaded(let productsList):
@@ -53,16 +53,16 @@ struct ProductsListView: View {
                     
                 case .apiError(let error):
                     Text(error.localizedDescription)
-                        .accessibilityIdentifier("person_list_error_text")
+                        .accessibilityIdentifier("product_list_error_text")
                 case .empty:
                     EmptyView()
                 }
             }
             .task(){
-                personViewModel.fetchProducts()
+                productViewModel.fetchProducts()
             }
             .refreshable{
-                personViewModel.fetchProducts()
+                productViewModel.fetchProducts()
             }.preferredColorScheme(isDarkMode ? .dark : .light)
         }
     }
